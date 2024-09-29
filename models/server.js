@@ -1,20 +1,26 @@
 const express = require('express');
 const cors = require('cors');
 const users = require('../routes/users');
-const paths = require('../paths');
+const { dbConnection } = require('../database/config');
 
 class Server {
     
     constructor(){
         this.app = express();
         this.port = process.env.PORT
-        this.usersPath = paths.users;
+
+        // Connect database
+        this.connectDB();
 
         //Middleware
         this.middleware();
 
         // app routes
         this.routes();
+    }
+
+    async connectDB() {
+        await dbConnection();
     }
 
     middleware() {
@@ -30,11 +36,9 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.usersPath, users);
+        this.app.use('/api/users', users);
     }
   
-
-
     listen() {
         this.app.listen(this.port, () => {
             console.log(`Rest server running on port ${this.port}`);
