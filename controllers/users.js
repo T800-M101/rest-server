@@ -138,8 +138,8 @@ const updateUser = (req, res = response) => {
 
 const deleteUser = async(req, res = response) => {
     try {
+        // Delete resource
         const { id } = req.params;
-
         const user = await User.findByIdAndUpdate(id, { active: false }, { new: true });
         
         return res.status(200).json({
@@ -147,7 +147,7 @@ const deleteUser = async(req, res = response) => {
             status: 200,
             user
         });
-
+        
     } catch (error) {
         console.log(error);
         return res.status(500).json({

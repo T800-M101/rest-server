@@ -1,5 +1,8 @@
 const {  Router } = require('express');
 const { check } = require('express-validator');
+const { validateFields,validateJWT, isAdmin, isRole } = require('../middleware');
+
+
 const { 
     getUser,
     getUsers, 
@@ -8,7 +11,7 @@ const {
     deleteUser,
     updateUser
 } = require('../controllers/users');
-const { validateFields } = require('../middleware/validate-fields');
+
 const { isValidRole, isEmailUnique, validateUserById } = require('../helpers/dbValidators');
 
 const router = Router();
@@ -55,9 +58,12 @@ router.put('/:id', [
 ], setUser);
 
 router.delete('/:id', [
+    validateJWT,
+    isAdmin,
+    //isRole('ADMIN_ROLE', 'SALES_ROLE'),
     check('id', 'It is not a valid ID').isMongoId(),
     check('id').custom( validateUserById ),
-    validateFields
+    validateFields,
 ], deleteUser);
 
 router.patch('/:id', updateUser);
@@ -68,6 +74,8 @@ router.patch('/:id', updateUser);
 
 module.exports = router;
 
-//check('role', 'This role is not allowed').isIn(['ADMIN_ROLE', 'USER_ROLE']),
-// The function custom pass only a role as argument to isValidRole, for this reason is not called like this isValidRole(role)
+// check('role', 'This role is not allowed').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+// The function custom() will call the function isValidRole in the future, for this reason is not called with parenthesis isValidRole. 
+// A reference of the function is passed only to custom(isValidRole), otherwise the function would be executed immediately 
+// and it may happen unexpected results.
 // Validating errors ( they are caught with "check" middleware in the routes) 
