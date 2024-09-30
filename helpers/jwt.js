@@ -6,7 +6,7 @@ const generateJWT = (user) => {
     return new Promise( (resolve, reject) => {
         // Define the payload you want to include in the token
         const payload = {
-            id: user._id, // You can include the user's ID or other important info
+            uid: user._id, // You can include the user's ID or other important info
             email: user.email,
             role: user.role
         };

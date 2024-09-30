@@ -18,10 +18,10 @@ const validateJWT = async(req = request, res = response, next) => {
 
     try {
         // Verify token and get authencticated user id
-        const { id } = jwt.verify(token, process.env.JWT_SECRET);
+        const { uid } = jwt.verify(token, process.env.JWT_SECRET);
         
         // Verify if the autheticated user is active in the database 
-        const user = await User.findById( id);
+        const user = await User.findById( uid);
 
         if (!user || !user.active) {
             return res.status(401).json({
