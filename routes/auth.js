@@ -4,10 +4,9 @@ const { validateFields } = require('../middleware/validate-fields');
 const { login, googleSignIn } = require('../controllers/auth');
 
 
-
-
 const router = Router();
 
+/*=========================== ROUTES ===============================*/
 
 router.post('/login', [
     check('email', 'Invalid email').isEmail(),

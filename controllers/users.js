@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const User = require('../models/user');
+const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 
 
@@ -59,7 +59,7 @@ const { from = 0, limit = 0 } = req.query;
         return res.status(500).json({
             message: 'Internal Server Error',
             status: 500,
-            response: 'POST: An error occurred while creating the user',
+            response: 'GET: An error occurred while getting the users',
         });
     }
 }

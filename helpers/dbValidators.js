@@ -1,6 +1,7 @@
-const Role = require('../models/role');
-const User = require('../models/user');
-
+const { Role } = require('../models');
+const { User } = require('../models');
+const { Category } = require('../models');
+const { Product } = require('../models');
 
 
 const isValidRole = async(role) => {
@@ -25,6 +26,35 @@ const validateUserById = async(id) => {
     }
 }
 
+const validateCategoryById = async(id) => {
+    const categoryExist = await Category.findById( id );
+    if ( !categoryExist ) {
+        throw new Error(`The category by id '${ id }' does not exist in the database.`);
+    }
+}
+
+const validateCategoryName = async(name) => {
+    name = name.toUpperCase();
+    const categoryExist = await Category.findOne( { name } );
+    if ( categoryExist ) {
+        throw new Error(`The category '${ name }' already exist in the database.`);
+    }
+}
+
+const validateProductById = async(id) => {
+    const productExist = await Product.findById( id );
+    if ( !productExist ) {
+        throw new Error(`The product by id '${ id }' does not exist in the database.`);
+    }
+}
+
+const validateProductName = async(name) => {
+    name = name.toUpperCase();
+    const productExist = await Product.findOne( { name } );
+    if ( productExist ) {
+        throw new Error(`The product '${ name }' already exist in the database.`);
+    }
+}
 
 
 
@@ -32,5 +62,9 @@ const validateUserById = async(id) => {
 module.exports = {
     isValidRole,
     isEmailUnique,
-    validateUserById
+    validateUserById,
+    validateCategoryById,
+    validateCategoryName,
+    validateProductById,
+    validateProductName
 }

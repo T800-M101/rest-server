@@ -21,7 +21,7 @@ const validateJWT = async(req = request, res = response, next) => {
         const { uid } = jwt.verify(token, process.env.JWT_SECRET);
         
         // Verify if the autheticated user is active in the database 
-        const user = await User.findById( uid);
+        const user = await User.findById( uid );
 
         if (!user || !user.active) {
             return res.status(401).json({
