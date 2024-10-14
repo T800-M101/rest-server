@@ -1,8 +1,8 @@
 const {  Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields,validateJWT, isAdmin, isRole } = require('../middleware');
-const { getUser, getUsers, createUser, setUser, deleteUser, updateUser } = require('../controllers/users');
-const { isValidRole, isEmailUnique, validateUserById } = require('../helpers/dbValidators');
+const { getUser, getUsers, createUser, setUser, deleteUser, updateUser } = require('../controllers');
+const { isValidRole, isEmailUnique, validateUserById } = require('../helpers');
 
 
 
@@ -66,8 +66,9 @@ router.patch('/:id', updateUser);
 
 module.exports = router;
 
-// check('role', 'This role is not allowed').isIn(['ADMIN_ROLE', 'USER_ROLE']),
-// The function custom() will call the function isValidRole in the future, for this reason is not called with parenthesis isValidRole. 
-// A reference of the function is passed only to custom(isValidRole), otherwise the function would be executed immediately 
-// and it may happen unexpected results.
-// Validating errors ( they are caught with "check" middleware in the routes) 
+/* check('role', 'This role is not allowed').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+ * The function custom() will call the function isValidRole in the future, for this reason is not called with parenthesis isValidRole. 
+ * A reference of the function is passed only to custom(isValidRole), otherwise the function would be executed immediately 
+ * and it may happen unexpected results.
+ * Validating errors ( they are caught with "check" middleware in the routes) 
+*/

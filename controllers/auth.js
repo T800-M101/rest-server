@@ -1,8 +1,7 @@
 const { request, response } = require('express');
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
-const generateJWT = require('../helpers/jwt');
-const { googleVerify } = require('../helpers/google-verify');
+const { generateJWT, googleVerify } = require('../helpers');
 
 
 const login = async(req = request, res = response) => {

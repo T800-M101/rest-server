@@ -25,4 +25,6 @@ const generateJWT = (user) => {
 };
 
 
-module.exports = generateJWT
+module.exports = {
+    generateJWT
+}
